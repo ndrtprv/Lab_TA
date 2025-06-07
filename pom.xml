@@ -129,6 +129,11 @@
       <artifactId>mockito-inline</artifactId>
       <version>5.2.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs</artifactId>
+      <version>4.8.4</version>
+    </dependency>
   </dependencies>
 
   <build>
