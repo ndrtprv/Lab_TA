@@ -131,8 +131,8 @@
     </dependency>
     <dependency>
       <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs</artifactId>
-      <version>4.8.4</version>
+      <artifactId>spotbugs-maven-plugin</artifactId>
+      <version>4.8.6.0</version>
     </dependency>
   </dependencies>
 
