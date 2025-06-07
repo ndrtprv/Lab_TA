@@ -34,7 +34,7 @@ class UserTest {
     @Test
     void setIdTest() {
         user.setId(2);
-        Assertions.assertEquals(1, user.getId());
+        Assertions.assertEquals(2, user.getId());
     }
 
     @Test
@@ -56,7 +56,7 @@ class UserTest {
     @Test
     void setFirstNameTest() {
         user.setFirstName("Vladyslav");
-        Assertions.assertEquals("Andrii", user.getFirstName());
+        Assertions.assertEquals("Vladyslav", user.getFirstName());
     }
 
     @Test
