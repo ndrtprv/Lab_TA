@@ -129,6 +129,16 @@
       <artifactId>mockito-inline</artifactId>
       <version>5.2.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.jacoco</groupId>
+      <artifactId>jacoco-maven-plugin</artifactId>
+      <version>0.8.13</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-maven-plugin</artifactId>
+      <version>4.8.6.0</version>
+    </dependency>
   </dependencies>
 
   <build>
