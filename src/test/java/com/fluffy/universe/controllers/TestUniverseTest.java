@@ -24,22 +24,25 @@ public class TestUniverseTest {
   JavascriptExecutor js;
   static Javalin app;
 
+  // Comment these lines on your local machine, and uncomment before push
   @BeforeAll
   public static void startServer() {
     app = Javalin.create().start(7000);
-    // або виклик методу, що запускає сервер з основного класу
   }
+  // Stop comment
 
   @BeforeEach
   public void setUp() {
+    // Comment these lines on your local machine, and uncomment before push
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--headless");
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
     options.addArguments("--disable-gpu");
     options.addArguments("--remote-allow-origins=*");
+    // Stop comment
 
-    driver = new ChromeDriver(options);
+    driver = new ChromeDriver(options); // Comment options on local machine, and uncomment before push
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
@@ -54,7 +57,7 @@ public class TestUniverseTest {
   public void testUniverse() {
     driver.get("http://127.0.0.1:7000/");
     driver.manage().window().setSize(new Dimension(1920, 1040));
-    driver.findElement(By.linkText("Sign up")).click();
+    driver.findElement(By.xpath("/html/body/header/nav/ul/li[2]/a")).click();
     driver.findElement(By.id("sign-up__first-name")).click();
     driver.findElement(By.id("sign-up__first-name")).sendKeys("Andrii");
     driver.findElement(By.id("sign-up__last-name")).click();
@@ -89,7 +92,7 @@ public class TestUniverseTest {
 
     clickDropdownItemText(driver, "Dashboard");
 
-    driver.findElement(By.linkText("New post")).click();
+    driver.findElement(By.xpath("/html/body/header/nav/ul/li[1]/a")).click();
     driver.findElement(By.cssSelector(".post-form__title")).click();
     {
       WebElement element = driver.findElement(By.cssSelector(".post-form__title"));
@@ -106,7 +109,7 @@ public class TestUniverseTest {
             .until(ExpectedConditions.elementToBeClickable(By.cssSelector(".alert__button")));
     okButton2.click();
 
-    driver.findElement(By.linkText("Read more")).click();
+    driver.findElement(By.xpath("/html/body/main/div/div[1]/div/a")).click();
     driver.findElement(By.cssSelector(".comment-form__textarea")).click();
     driver.findElement(By.cssSelector(".comment-form__textarea")).sendKeys("Гарна робота!");
     driver.findElement(By.cssSelector(".comment-form__button:nth-child(1)")).click();
