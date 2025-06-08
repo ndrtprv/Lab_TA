@@ -21,8 +21,14 @@ jobs:
           java-version: '17'
           cache: maven
 
+      - name: Install Selenium runner
+        run: npm install -g selenium-side-runner
+
       - name: Build and run tests
         run: mvn clean test
+
+      - name: Run Selenium tests
+        run: selenium-side-runner tests/your_test.side
 
       - name: Run CheckStyle
         run: mvn checkstyle:checkstyle
