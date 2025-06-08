@@ -35,7 +35,7 @@ public class TestUniverseTest {
   public void setUp() {
     // Comment these lines on your local machine, and uncomment before push
     ChromeOptions options = new ChromeOptions();
-    options.addArguments("--headless");
+    //options.addArguments("--headless");
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
     options.addArguments("--disable-gpu");
@@ -57,7 +57,11 @@ public class TestUniverseTest {
   public void testUniverse() {
     driver.get("http://127.0.0.1:7000/");
     driver.manage().window().setSize(new Dimension(1920, 1040));
-    driver.findElement(By.xpath("/html/body/header/nav/ul/li[2]/a")).click();
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    WebElement signup = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.xpath("/html/body/header/nav/ul/li[2]/a")
+    ));
+    signup.click();
     driver.findElement(By.id("sign-up__first-name")).click();
     driver.findElement(By.id("sign-up__first-name")).sendKeys("Andrii");
     driver.findElement(By.id("sign-up__last-name")).click();
