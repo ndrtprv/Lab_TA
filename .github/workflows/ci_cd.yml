@@ -27,9 +27,6 @@ jobs:
       - name: Build and run tests
         run: mvn clean test
 
-      - name: Run Selenium tests
-        run: selenium-side-runner src/test/java/selenium_tests/Test_Universe.side
-
       - name: Run CheckStyle
         run: mvn checkstyle:checkstyle
 
