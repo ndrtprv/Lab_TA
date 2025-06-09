@@ -24,6 +24,14 @@ jobs:
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
 
+      - name: Set up ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+        with:
+            chromedriver-version: latest
+
+      - name: Make chromedriver executable
+        run: chmod +x $(which chromedriver)
+
       - name: Build and run tests
         run: mvn clean test
 
