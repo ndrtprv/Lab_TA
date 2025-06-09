@@ -23,11 +23,12 @@ jobs:
 
       - name: Install Gauge
         run: |
-            wget -q https://downloads.gauge.org/stable/gauge-linux.x86_64.zip -O gauge.zip
-            unzip gauge.zip -d gauge
-            sudo mv gauge/gauge /usr/local/bin/gauge
-            gauge install java
-            gauge install html-report
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 023EDB0B
+          echo "deb https://downloads.gauge.org/stable/debian stable main" | sudo tee /etc/apt/sources.list.d/gauge.list
+          sudo apt-get update
+          sudo apt-get install -y gauge
+          gauge install java
+          gauge install html-report
 
       - name: Build and run tests
         run: mvn clean test
