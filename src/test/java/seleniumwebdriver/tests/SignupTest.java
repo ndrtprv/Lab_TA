@@ -1,10 +1,12 @@
 package seleniumwebdriver.tests;
 
+import io.javalin.Javalin;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,11 +18,28 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SignupTest {
-    protected WebDriver driver;
+    private WebDriver driver;
+    static Javalin app;
+
+    // Comment these lines on your local machine, and uncomment before push
+    @BeforeAll
+    public static void startServer() {
+        app = Javalin.create().start(7000);
+    }
+    // Stop comment
 
     @BeforeEach
     public void setUp() {
-        driver = new ChromeDriver();
+        // Comment these lines on your local machine, and uncomment before push
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--remote-allow-origins=*");
+        // Stop comment
+
+        driver = new ChromeDriver(options); // Comment options on local machine, and uncomment before push
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
     }
 
