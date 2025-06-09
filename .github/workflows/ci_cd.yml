@@ -23,20 +23,11 @@ jobs:
 
       - name: Install Gauge
         run: |
-          RAW_VERSION=$(curl -s https://api.github.com/repos/getgauge/gauge/releases/latest | grep tag_name | cut -d '"' -f 4)
+          sudo apt-get install -y gauge
 
-          GAUGE_VERSION=${RAW_VERSION#v}
-
-          echo "Installing Gauge version $GAUGE_VERSION"
-
-          curl -L -o gauge.zip "https://github.com/getgauge/gauge/releases/download/v${GAUGE_VERSION}/gauge-linux.x86_64.zip"
-
-          unzip gauge.zip -d gauge-bin
-          sudo mv gauge-bin/gauge /usr/local/bin/gauge
-          gauge -v
-
+      - name: Install Java Plugin
+        run: |
           gauge install java
-          gauge install html-report
 
       - name: Build and run tests
         run: mvn clean test
@@ -50,11 +41,11 @@ jobs:
       - name: Run SpotBugs
         run: mvn com.github.spotbugs:spotbugs-maven-plugin:4.9.3.0:spotbugs
 
-      - name: Save HTML Report
+      - name: Save XML Report
         uses: actions/upload-artifact@v4
         with:
-            name: gauge-html-report
-            path: reports/html-report/
+          name: gauge-xml-report
+          path: reports/xml-report/
 
       - name: Generate JaCoCo report
         run: mvn jacoco:report
