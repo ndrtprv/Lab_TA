@@ -46,7 +46,13 @@ public class SignupTest {
         options.addArguments("--aggressive-cache-discard");
         // Stop comment
 
-        System.setProperty("webdriver.chrome.driver", "bin/chromedriver.exe");
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) {
+            System.setProperty("webdriver.chrome.driver", "bin/chromedriver.exe");
+        } else {
+            // у Linux (наприклад, GitHub Actions) ChromeDriver уже встановлено в PATH
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        }
 
         driver = new ChromeDriver(options); // Comment options on local machine, and uncomment before push
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));

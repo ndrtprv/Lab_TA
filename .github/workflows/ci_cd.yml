@@ -24,10 +24,19 @@ jobs:
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - name: Set up ChromeDriver
+      - name: Get Chrome version
+        id: chrome-version
+        run: |
+            CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+            echo "CHROME_VERSION=$CHROME_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up matching ChromeDriver
         uses: nanasess/setup-chromedriver@v2
         with:
-            chromedriver-version: latest
+            chromedriver-version: ${{ steps.chrome-version.outputs.CHROME_VERSION }}
+
+      - name: Make chromedriver executable
+        run: chmod +x $(which chromedriver)
 
       - name: Make chromedriver executable
         run: chmod +x $(which chromedriver)
