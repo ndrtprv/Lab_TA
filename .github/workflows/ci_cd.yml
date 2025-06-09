@@ -23,10 +23,10 @@ jobs:
 
       - name: Install Gauge
         run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 023EDB0B
-          echo "deb https://downloads.gauge.org/stable/debian stable main" | sudo tee /etc/apt/sources.list.d/gauge.list
-          sudo apt-get update
-          sudo apt-get install -y gauge
+          curl -L -A "Mozilla/5.0" https://github.com/getgauge/gauge/releases/latest/download/gauge-linux.x86_64.zip -o gauge.zip
+          unzip gauge.zip -d gauge-bin
+          sudo mv gauge-bin/gauge /usr/local/bin/gauge
+          gauge -v
           gauge install java
           gauge install html-report
 
