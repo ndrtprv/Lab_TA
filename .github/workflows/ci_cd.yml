@@ -23,7 +23,6 @@ jobs:
 
       - name: Install Gauge
         run: |
-            sudo apt-get install -y wget
             wget -q https://downloads.gauge.org/stable/gauge-linux.x86_64.zip -O gauge.zip
             unzip gauge.zip -d gauge
             sudo mv gauge/gauge /usr/local/bin/gauge
