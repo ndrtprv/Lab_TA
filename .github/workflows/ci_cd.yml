@@ -21,31 +21,23 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Install Gauge
-        run: |
-          sudo apt-get install -y gauge
-
-      - name: Install Java Plugin
-        run: |
-          gauge install java
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
 
       - name: Build and run tests
         run: mvn clean test
 
-      - name: Run Gauge Tests
-        run: gauge run specs/
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots/
 
       - name: Run CheckStyle
         run: mvn checkstyle:checkstyle
 
       - name: Run SpotBugs
         run: mvn com.github.spotbugs:spotbugs-maven-plugin:4.9.3.0:spotbugs
-
-      - name: Save XML Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: gauge-xml-report
-          path: reports/xml-report/
 
       - name: Generate JaCoCo report
         run: mvn jacoco:report

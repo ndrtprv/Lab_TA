@@ -21,7 +21,6 @@ import java.util.*;
 public class TestUniverseTest {
 
   private WebDriver driver;
-  private Map<String, Object> vars;
   JavascriptExecutor js;
   static Javalin app;
 
@@ -45,7 +44,6 @@ public class TestUniverseTest {
 
     driver = new ChromeDriver(options); // Comment options on local machine, and uncomment before push
     js = (JavascriptExecutor) driver;
-    vars = new HashMap<String, Object>();
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
   }
 
