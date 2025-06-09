@@ -23,10 +23,18 @@ jobs:
 
       - name: Install Gauge
         run: |
-          curl -L -A "Mozilla/5.0" https://github.com/getgauge/gauge/releases/latest/download/gauge-linux.x86_64.zip -o gauge.zip
+          # Дізнаємося останню версію
+          GAUGE_VERSION=$(curl -s https://api.github.com/repos/getgauge/gauge/releases/latest | grep tag_name | cut -d '"' -f 4)
+
+          # Завантажуємо дійсний zip
+          curl -L -o gauge.zip "https://github.com/getgauge/gauge/releases/download/${GAUGE_VERSION}/gauge-linux.x86_64.zip"
+
+          # Розпаковуємо та встановлюємо
           unzip gauge.zip -d gauge-bin
           sudo mv gauge-bin/gauge /usr/local/bin/gauge
           gauge -v
+
+          # Встановлюємо плагіни
           gauge install java
           gauge install html-report
 
