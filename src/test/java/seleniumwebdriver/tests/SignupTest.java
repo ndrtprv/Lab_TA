@@ -1,5 +1,6 @@
 package seleniumwebdriver.tests;
 
+import com.google.api.Service;
 import io.javalin.Javalin;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,8 +37,16 @@ public class SignupTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
+        options.addArguments("--disable-extensions");
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disk-cache-size=1");
+        options.addArguments("--media-cache-size=1");
+        options.addArguments("--incognito");
+        options.addArguments("--remote-debugging-port=9222");
+        options.addArguments("--aggressive-cache-discard");
         // Stop comment
+
+        System.setProperty("webdriver.chrome.driver", "bin/chromedriver.exe");
 
         driver = new ChromeDriver(options); // Comment options on local machine, and uncomment before push
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
