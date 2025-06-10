@@ -21,28 +21,24 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Install Chrome
+      - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - name: Get Chrome version
-        id: chrome-version
+      - name: Verify Chrome installation
         run: |
-            CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-            echo "CHROME_VERSION=$CHROME_VERSION" >> $GITHUB_OUTPUT
+          google-chrome --version
+          which google-chrome
 
-      - name: Set up matching ChromeDriver
+      - name: Set up ChromeDriver
         uses: nanasess/setup-chromedriver@v2
         with:
-            chromedriver-version: ${{ steps.chrome-version.outputs.CHROME_VERSION }}
-
-      - name: Make chromedriver executable
-        run: chmod +x $(which chromedriver)
-
-      - name: Make chromedriver executable
-        run: chmod +x $(which chromedriver)
+          chromedriver-version: 'latest'
 
       - name: Build and run tests
-        run: mvn clean test
+        run: | 
+          mvn clean test
+          env:
+            CHROME_BIN: /usr/bin/google-chrome
 
       - name: Upload Screenshots
         uses: actions/upload-artifact@v4

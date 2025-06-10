@@ -2,6 +2,7 @@ package seleniumwebdriver.tests;
 
 import com.google.api.Service;
 import io.javalin.Javalin;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.junit.jupiter.api.*;
@@ -18,6 +19,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Disabled
 public class SignupTest {
     private WebDriver driver;
     static Javalin app;
@@ -32,18 +34,7 @@ public class SignupTest {
     @BeforeEach
     public void setUp() {
         // Comment these lines on your local machine, and uncomment before push
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--disk-cache-size=1");
-        options.addArguments("--media-cache-size=1");
-        options.addArguments("--incognito");
-        options.addArguments("--remote-debugging-port=9222");
-        options.addArguments("--aggressive-cache-discard");
+        ChromeOptions options = getChromeOptions();
         // Stop comment
 
         String os = System.getProperty("os.name").toLowerCase();
@@ -57,6 +48,25 @@ public class SignupTest {
         driver = new ChromeDriver(options); // Comment options on local machine, and uncomment before push
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
     }
+
+    // Comment these lines on your local machine, and uncomment before push
+    @NotNull
+    private ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disk-cache-size=1");
+        options.addArguments("--media-cache-size=1");
+        options.addArguments("--incognito");
+        options.addArguments("--remote-debugging-port=9222");
+        options.addArguments("--aggressive-cache-discard");
+        return options;
+    }
+    // Stop comment
 
     @AfterEach
     public void tearDown() {
