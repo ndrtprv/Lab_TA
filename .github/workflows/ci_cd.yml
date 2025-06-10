@@ -41,8 +41,6 @@ jobs:
       - name: Build and run tests
         run: | 
           mvn clean test
-          env:
-            CHROME_BIN: /usr/bin/google-chrome
 
       - name: Upload Screenshots
         uses: actions/upload-artifact@v4
