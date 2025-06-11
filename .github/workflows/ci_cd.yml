@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Run Postman tests
-        uses: matt-ball/newman-action@v1
+        uses: actions/newman@v5
         with:
           collection: postman/Fluffy.postman_collection.json
           environment: postman/myEnvironment.postman_environment.json
