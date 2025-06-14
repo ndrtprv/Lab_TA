@@ -34,7 +34,7 @@ public final class Configuration {
                     throw new IllegalArgumentException(String.format("Property %s not found in %s and or system environment", parameter, propertiesFile.getPath()));
                 }
                 if (pathParameters.contains(parameter)) {
-                    value = value.replace("\0", "");
+                    value = value.replaceAll("[\\x00-\\x1F]", "");
                     value = FilenameUtils.getName(value);
                     value = new File(value).getAbsolutePath();
                 }
