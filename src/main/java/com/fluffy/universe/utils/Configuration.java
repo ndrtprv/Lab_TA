@@ -33,10 +33,9 @@ public final class Configuration {
                 if (value == null) {
                     throw new IllegalArgumentException(String.format("Property %s not found in %s and or system environment", parameter, propertiesFile.getPath()));
                 }
+
                 if (pathParameters.contains(parameter)) {
-                    value = value.replaceAll("[\\x00-\\x1F]", "");
-                    value = FilenameUtils.getName(value);
-                    value = new File(value).getAbsolutePath();
+                    value = sanitizeAndNormalizePath(value);
                 }
 
                 values.put(parameter, value);
@@ -44,6 +43,24 @@ public final class Configuration {
         } catch (IOException e) {
             throw new IllegalStateException("Unable to load configuration from file: " + propertiesFile.getPath(), e);
         }
+    }
+
+    private static String sanitizeAndNormalizePath(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException("Path value is null");
+        }
+
+        // Очищення: видалення null-байтів та контрольних символів
+        String sanitized = input.replaceAll("[\\x00-\\x1F]", "");
+
+        // Заборона шляхів з підозрілими символами
+        if (sanitized.contains("..") || sanitized.contains("/") || sanitized.contains("\\")) {
+            throw new IllegalArgumentException("Suspicious path value: " + sanitized);
+        }
+
+        // Витяг лише назви файлу та створення абсолютного шляху
+        String filename = FilenameUtils.getName(sanitized);
+        return new File(filename).getAbsolutePath();
     }
 
     public static String get(String parameter) {
