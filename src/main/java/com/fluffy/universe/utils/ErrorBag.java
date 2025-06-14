@@ -32,7 +32,11 @@ public class ErrorBag {
     }
 
     public Map<String, Map<String, String>> getStorage() {
-        return storage;
+        Map<String, Map<String, String>> copy = new HashMap<>();
+        for (Map.Entry<String, Map<String, String>> entry : storage.entrySet()) {
+            copy.put(entry.getKey(), new HashMap<>(entry.getValue()));
+        }
+        return copy;
     }
 
     @Override

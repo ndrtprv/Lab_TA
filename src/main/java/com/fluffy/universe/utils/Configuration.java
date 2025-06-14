@@ -1,5 +1,7 @@
 package com.fluffy.universe.utils;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,6 +31,7 @@ public final class Configuration {
             for (String parameter : parameters) {
                 String value = (String) properties.getOrDefault(parameter, env.get(parameter));
                 if (pathParameters.contains(parameter)) {
+                    value = FilenameUtils.getName(value);
                     value = new File(value).getAbsolutePath();
                 }
                 if (value == null) {
