@@ -9,6 +9,7 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class CommentController extends Controller {
     public CommentController(Javalin application) {
@@ -16,7 +17,7 @@ public class CommentController extends Controller {
     }
 
     public void store(Context context) {
-        Integer parentId = context.formParam("parent-id") == null || context.formParam("parent-id").isEmpty() ? null : Integer.parseInt(context.formParam("parent-id"));
+        Integer parentId = context.formParam("parent-id") == null || context.formParam("parent-id").isEmpty() ? null : Integer.parseInt(Objects.requireNonNull(context.formParam("parent-id")));
         Integer postId = context.formParamAsClass("post-id", Integer.class).get();
         String description = context.formParam("description");
         Integer userID = SessionUtils.getCurrentUser(context).getId();

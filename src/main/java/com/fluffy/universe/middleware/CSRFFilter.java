@@ -35,12 +35,18 @@ public final class CSRFFilter {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void generateToken(Context context) {
         if (context.sessionAttribute(SessionKey.CSRF) != null) {
             return;
         }
 
         Map<String, Object> model = context.sessionAttribute(SessionKey.MODEL);
+        if (model == null) {
+            model = new java.util.HashMap<>();
+            context.sessionAttribute(SessionKey.MODEL, model);
+        }
+
         String csrfToken = UUID.randomUUID().toString();
 
         context.sessionAttribute(SessionKey.CSRF, csrfToken);

@@ -34,6 +34,6 @@ public enum Role implements RouteRole {
                 return role;
             }
         }
-        throw new RuntimeException("Role for id = " + id + " not found");
+        throw new IllegalArgumentException("Role for id = " + id + " not found");
     }
 }

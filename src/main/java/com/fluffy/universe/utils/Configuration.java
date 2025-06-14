@@ -30,17 +30,19 @@ public final class Configuration {
 
             for (String parameter : parameters) {
                 String value = (String) properties.getOrDefault(parameter, env.get(parameter));
-                if (pathParameters.contains(parameter)) {
-                    value = FilenameUtils.getName(value);
-                    value = new File(value).getAbsolutePath();
-                }
                 if (value == null) {
                     throw new IllegalArgumentException(String.format("Property %s not found in %s and or system environment", parameter, propertiesFile.getPath()));
                 }
+                if (pathParameters.contains(parameter)) {
+                    value = value.replace("\0", "");
+                    value = FilenameUtils.getName(value);
+                    value = new File(value).getAbsolutePath();
+                }
+
                 values.put(parameter, value);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Unable to load configuration from file: " + propertiesFile.getPath(), e);
         }
     }
 
