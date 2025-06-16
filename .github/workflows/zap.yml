@@ -1,0 +1,44 @@
+name: ZAP Scan
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'  # або ваша версія
+
+      - name: Build project with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Start Javalin server
+        run: |
+          java -jar target/*.jar &
+          sleep 10  # дайте серверу час запуститися
+
+      - name: Run OWASP ZAP Baseline Scan
+        run: |
+          docker run -v $(pwd):/zap/wrk/:rw \
+            -t owasp/zap2docker-stable zap-baseline.py \
+            -t http://localhost:7000 \
+            -r zap_report.html \
+            -g gen.conf
+        continue-on-error: true  # не блокує pipeline, якщо знайдено вразливості
+
+      - name: Upload ZAP HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap_report.html

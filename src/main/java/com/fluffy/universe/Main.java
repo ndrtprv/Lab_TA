@@ -21,6 +21,20 @@ public class Main {
         ExceptionHandlerController exceptionHandlerController = new ExceptionHandlerController(application);
 
         application
+                .before(context -> {
+                    context.header("Content-Security-Policy",
+                            "default-src 'self'; " +
+                                    "script-src 'self'; " +
+                                    "style-src 'self'; " +
+                                    "img-src 'self' data:; " +
+                                    "font-src 'self'; " +
+                                    "connect-src 'self'; " +
+                                    "frame-ancestors 'none'; " +
+                                    "object-src 'none'; " +
+                                    "base-uri 'self';");
+                    context.header("X-Frame-Options", "DENY");
+                    context.header("X-Content-Type-Options", "nosniff");
+                })
                 .before(ModelFilter::initializeModel)
                 .before(CSRFFilter::verifyToken)
                 .before(CSRFFilter::generateToken)
